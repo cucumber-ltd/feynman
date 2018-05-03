@@ -1,0 +1,25 @@
+{
+  "name": "feynman",
+  "version": "0.0.1",
+  "description": "A screenplay pattern library for javascript",
+  "main": "lib/feynman.js",
+  "scripts": {
+    "test": "mocha"
+  },
+  "author": "",
+  "license": "MIT",
+  "devDependencies": {
+    "eslint": "^4.19.1",
+    "eslint-config-mocha": "^0.0.0",
+    "eslint-config-prettier": "^2.9.0",
+    "eslint-plugin-mocha": "^5.0.0",
+    "eslint-plugin-prettier": "^2.6.0",
+    "mocha": "^5.1.1",
+    "prettier": "^1.12.1",
+    "selenium-webdriver": "^4.0.0-alpha.1"
+  },
+  "dependencies": {
+    "caller": "^1.0.1",
+    "pascal-case": "^2.0.1"
+  }
+}
