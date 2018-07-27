@@ -7,7 +7,7 @@ Feynman is designed to make it simple to run the same tasks at different levels 
 Here's an example:
 
 ```javascript
-const { Login, SearchForRoom } = require('')
+const { Book, CancelRoom, CurrentBookings } = require('TODO')
 const throughTheDomain = new DomainPerspective()
 const throughTheWebApp = new WebAppPerspective()
 
@@ -47,11 +47,16 @@ Then('Joe should have no bookings', async () => {
 ## Puzzles
 
 - how to pass state between steps (do actors have brains?)
-    - do we want to re-use actors between steps?
+  - do we want to re-use actors between steps?
+  - maybe we can have a single state tree that we use reducers / selectors to manage
+  - what makes Joe, Joe?
+    - where does his state live?
 - we don't quite now how to express assertions
-    - do we just want to use attemptsTo and have commands that have assertions? This might make reporting harder later?
+  - do we just want to use attemptsTo and have commands that have assertions? This might make reporting harder later?
 - is having namespaces for questions important?
 - do we even need questions
 - do we say checks or asserts
+- how do we choose which low-level task to load that is composed of interactions? Based on the perspective?
+  - perhaps we can just separate the definition from the handler (like commands / command handlers)
 
-[screenplay]: // TODO
+    [screenplay]: // TODO
