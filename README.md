@@ -6,7 +6,7 @@ Feynman is designed to make it simple to run the same tasks at different levels 
 
 Here's an example:
 
-```
+```javascript
 const { Login, SearchForRoom } = require('')
 const throughTheDomain = new DomainPerspective()
 const throughTheWebApp = new WebAppPerspective()
@@ -25,7 +25,16 @@ When('Joe cancels his hotel room', async () => {
   )
 })
 
-Then('Joe should have received a cancellation email', async () => {
+Then('Joe should have no bookings', async () => {
+  const joe = Actor()
+  
+  throughTheWebApp(joe).attemptsTo(
+    AssertThat(CurrentBookings.areEmpty)
+  )
+  // ==
+  throughTheWebApp(joe).checksThat(
+    CurrentBookings.areEmpty
+  )
 })
 
 
@@ -39,5 +48,10 @@ Then('Joe should have received a cancellation email', async () => {
 
 - how to pass state between steps (do actors have brains?)
     - do we want to re-use actors between steps?
+- we don't quite now how to express assertions
+    - do we just want to use attemptsTo and have commands that have assertions? This might make reporting harder later?
+- is having namespaces for questions important?
+- do we even need questions
+- do we say checks or asserts
 
 [screenplay]: // TODO
