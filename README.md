@@ -46,7 +46,9 @@ Then('Joe should have no bookings', async () => {
 
 ## Puzzles
 
-- how to pass state between steps (do actors have brains?)
+- how do we choose which low-level task to load that is composed of interactions? Based on the perspective?
+  - perhaps we can just separate the definition from the handler (like commands / command handlers)
+- how to pass state between steps (do actors have brains / memories?)
   - do we want to re-use actors between steps?
   - maybe we can have a single state tree that we use reducers / selectors to manage
   - what makes Joe, Joe?
@@ -56,7 +58,5 @@ Then('Joe should have no bookings', async () => {
 - is having namespaces for questions important?
 - do we even need questions
 - do we say checks or asserts
-- how do we choose which low-level task to load that is composed of interactions? Based on the perspective?
-  - perhaps we can just separate the definition from the handler (like commands / command handlers)
 
     [screenplay]: // TODO
