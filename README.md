@@ -1,0 +1,43 @@
+# Feynman
+
+A library for helping you organise your JavaScript test automation code, inspired by the [screenplay pattern][screenplay].
+
+Feynman is designed to make it simple to run the same tasks at different levels of your stack.
+
+Here's an example:
+
+```
+const { Login, SearchForRoom } = require('')
+const throughTheDomain = new DomainPerspective()
+const throughTheWebApp = new WebAppPerspective()
+
+Given('Joe has booked a hotel room', async () => {
+  const joe = Actor()
+  throughTheDomain(joe).attemptsTo(
+    Book.aRoom
+  )
+})
+
+When('Joe cancels his hotel room', async () => {
+  const joe = Actor()
+  throughTheWebApp(joe).attemptsTo(
+    CancelRoom.bookedBy(joe)
+  )
+})
+
+Then('Joe should have received a cancellation email', async () => {
+})
+
+
+// TODO: map the Book.aRoom task to these lower level tasks to show that tasks are composable
+//    Login.withValidCredentials,
+//    SearchForRoom.availableWithinNextTwoWeeks
+//    BookRoom.fromFirstSearchResult
+```
+
+## Puzzles
+
+- how to pass state between steps (do actors have brains?)
+    - do we want to re-use actors between steps?
+
+[screenplay]: // TODO
