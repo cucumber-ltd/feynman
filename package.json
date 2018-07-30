@@ -20,5 +20,8 @@
   },
   "dependencies": {
     "sinon": "^6.1.4"
+  },
+  "prettier": {
+    "semi": false
   }
 }
