@@ -11,36 +11,67 @@ const { Book, CancelRoom, CurrentBookings } = require('TODO')
 const throughTheDomain = new DomainPerspective()
 const throughTheWebApp = new WebAppPerspective()
 
-const BookAHolidayTo = destination => composedOf(BookARoom, BookAFlightTo(destination))
+const Book = Tasks(Book => {
+  Book.aRoom
+  Book.aFlight = destination => ???
+  Book.aHoliday = destination => ???
+})
 
-const Book = {
-  aRoom: TaskId(taskId => ({ actor, perspective }) =>
-    actor.attemptsTo(perspective[taskId])
-  ),
-  aFlight: {
-    to: TaskId(taskId => (...args) => ({ actor, perspective }) =>
-      actor.attemptsTo(perspective[taskId](...args))
-    ),
-  },
-  aHolidayTo: destination => ({ actor }) =>
-    actor.attemptsTo(Book.aRoom, Book.aFlight.to(destination)),
+const Book = { 
+  aRoom: 'book-a-room-123',
+  aFlight: 'la ala la',
 }
 
-const DomainPerspective = {
-  [Book.aRoom]: ({ state, domain }) =>
-    domain.bookRoom({ email: state.get('email') }),
-  [Book.aFlight.to]: destination => ({ domain }) =>
-    domain.bookFlight(destination),
-}
+const globalPerspecive = definePerspective(() => {
+  action(Book.aHoliday, destination => ({actor}) => actor.attemptsTo(Book.aRoom, Book.aFlight(destination)))
+})
 
-const WebAppPerspective = {
-  [Book.aRoom]: ({ actor, state }) => {
-    actor.attemptsTo(
-      FillIn.field({ name: 'Email' }).with(state.get('email')),
-      ClickOn.button({ name: 'Book Room' })
-    )
-  },
-}
+const domainPerspective = definePerspective(() => {
+  action(Book.aRoom, ({domain, state}) => {
+    domain.bookARoom(state.get('email'))
+  })
+  action(Book.aFlight, destination => ({domain}) => {
+    domain.bookAFlight(destination)
+  })
+})
+
+
+
+
+
+
+// interacting tasks (i.e. interactions? or are interations the methods called in those low-level tasks?)
+const BookARoom = roomNumber => ({ type: 'BookARoom', roomNumber })
+const BookAFlight = flightNumber => ({ type: 'BookAFlight', flightNumber })
+// high order tasks
+const BookAHoliday = (roomNumber, flightNumber) => ({
+  type: 'BookAHoliday',
+  roomNumber,
+  flightNumber,
+})
+const handleBookAHoliday = [BookARoom, BookAFlight]
+domainPerspective.handle(BookARoom, (actor, action, { domain }) =>
+  domain.bookRoom(action.roomNumber)
+)
+webbAppPerspective.handle(BookARoom, (actor, action, { browser }) =>
+  browser.go(`http://blah/${action.roomNumber}`)
+)
+
+domainPerspective.handle(BookAHoliday, handleBookAHoliday)
+webbAppPerspective.handle(BookAHoliday, handleBookAHoliday)
+// last two lines can be rewritten with a helper as:
+handleInPerspectives(
+  BookAHoliday,
+  [domainPerspective, webbAppPerspective],
+  (actor, { roomNumber, flightNumber }) =>
+    actor.attempsTo(BookARoom(roomNumber), BookAFlight(flightNumber))
+)
+
+const Actor = (perspective, abilities) => {
+  attemptsTo: (action) => {
+    perspective.lookUpHandler(action.type)(...)
+  }
+} 
 
 Given('Joe has booked a hotel room', async () => {
   const joe = Actor()
