@@ -19,8 +19,6 @@
     "selenium-webdriver": "^4.0.0-alpha.1"
   },
   "dependencies": {
-    "caller": "^1.0.1",
-    "pascal-case": "^2.0.1",
     "sinon": "^6.1.4"
   }
 }
