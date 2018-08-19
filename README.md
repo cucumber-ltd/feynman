@@ -7,11 +7,11 @@ application in different ways. More on that later.
 
 It starts with the `Actor`
 
-## Actors perform actions using their abilities
+## Actors perform actions using their abilities
 
 At its most basic, you give an `Actor` some `Abilities` and then tell them to perform some `Actions`:
 
-```
+```javascript
 const { Actor } = require('feynman')
 
 const abilities = { console }
@@ -37,7 +37,7 @@ higher-level abstractions.
 
 Actions are *composable* because they're also passed the actor, so you can tell them to perform more actions:
 
-```
+```javascript
 const { Actor } = require('feynman')
 
 const abilities = { console }
