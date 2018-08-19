@@ -2,12 +2,72 @@
 
 A library for helping you organise your JavaScript test automation code, inspired by the [screenplay pattern][screenplay].
 
-Feynman is designed to make it simple to run the same tasks at different levels of your stack.
+What's unique about feynman is that you can define multiple *perspectives* that allow you to run the same tasks against your
+application in different ways. More on that later.
 
-Here's an example:
+It starts with the `Actor`
+
+## Actors perform actions using their abilities
+
+At its most basic, you give an `Actor` some `Abilities` and then tell them to perform some `Actions`:
+
+```
+const { Actor } = require('feynman')
+
+const abilities = { console }
+const Write = {
+  message: text => ({ console }) => console.log(text),
+  error: text => ({ console }) => console.error(text)
+}
+
+const actor = Actor(abilities)
+actor.attemptsTo(
+  Write.message("Hello world"),
+  Write.error("eek!")
+)
+```
+
+The whole set of abilities (in this case, just the `console`) is passed to each action handler function when it's attempted. The action
+handler can just pick out the abilities it needs to do its work.
+
+So what's the point? Well, by definining your test automation code as these little actions, you can compose them together into
+higher-level abstractions.
+
+## Actions are composable
+
+Actions are *composable* because they're also passed the actor, so you can tell them to perform more actions:
+
+```
+const { Actor } = require('feynman')
+
+const abilities = { console }
+const Write = {
+  message: text => ({ console }) => console.log(text)
+}
+
+const Sing {
+  song: ({ actor }) =>
+    actor.attemptsTo(
+      Write.message("Three blind mice")
+      Write.message("See how they run")
+    )
+  }
+}
+
+const actor = Actor(abilities)
+actor.attemptsTo(Sing.song())
+```
+
+This allows you to build up higher-level behaviours out of granular actions.
+
+## Actors can take different perspectives
+
+If you want your [acceptance tests to run fast](https://www.youtube.com/watch?v=Fk4rCn4YLLU), you often want to be able to exercise the same behaviour through different levels in your stack.
+
+.... TODO
 
 ```javascript
-const { Book, CancelRoom, CurrentBookings } = require('TODO')
+const { Book, CancelRoom, CurrentBookings } = require('./tasks')
 const throughTheDomain = new DomainPerspective()
 const throughTheWebApp = new WebAppPerspective()
 
