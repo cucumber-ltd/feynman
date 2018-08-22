@@ -24,7 +24,7 @@ Or you might use one to navigate through your UI:
 const visitLogin = ({ browser }) => browser.get("https://localhost:5000/login")
 ```
 
-You don't have to, but it's idiomatic in screenplay to group actions together into little namespaces, so you can use a fluent style to create them:
+You don't have to, but it's idiomatic in screenplay to group actions together into little namespaces:
 ```javascript
 const Visit = {
   login: ({ browser }) => browser.get("https://localhost:5000/login")
