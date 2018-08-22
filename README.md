@@ -29,6 +29,7 @@ You don't have to, but it's idiomatic in screenplay to group actions together in
 const Visit = {
   login: ({ browser }) => browser.get("https://localhost:5000/login")
 }
+```
 
 You'll see most of our examples, and the actions that come with this library, tend to use that style.
 
