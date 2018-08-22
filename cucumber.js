@@ -4,13 +4,14 @@ const { Actor, Perspective } = require('./lib/feynman')
 
 let context
 
-const actor = (name, callbacks = {}) => {
+const actor = async (name, callbacks = {}) => {
   if (context.actors[name]) return context.actors[name]
   const result = (context.actors[name] = Actor(
     {},
     context.perspectives.default
   ))
-  if (callbacks.hasOwnProperty('afterCreate')) callbacks.afterCreate(result)
+  if (callbacks.hasOwnProperty('afterCreate'))
+    await callbacks.afterCreate(result)
   return result
 }
 

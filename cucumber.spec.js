@@ -15,13 +15,26 @@ describe('cucumber integration', () => {
     assert.deepEqual(dave, anotherDave)
   })
 
-  it('runs an afterCreate callback when the actor is created', () => {
+  it('runs an afterCreate callback when the actor is created', async () => {
     const setupMyActor = sinon.spy()
     const { actor } = require('./cucumber')
-    const dave = actor('dave', { afterCreate: setupMyActor })
-    const anotherDave = actor('dave', { afterCreate: setupMyActor })
+    const dave = await actor('dave', { afterCreate: setupMyActor })
+    await actor('dave', { afterCreate: setupMyActor })
     sinon.assert.calledOnce(setupMyActor)
     sinon.assert.calledWith(setupMyActor, dave)
+  })
+
+  it('runs an afterCreate callback when the actor is created', async () => {
+    const login = sinon.spy()
+    const setupMyActor = new Promise(resolve =>
+      setTimeout(() => {
+        login()
+        resolve()
+      }, 1)
+    )
+    const { actor } = require('./cucumber')
+    await actor('dave', { afterCreate: setupMyActor })
+    sinon.assert.calledOnce(login)
   })
 
   it('resets the state between scenarios', () => {
