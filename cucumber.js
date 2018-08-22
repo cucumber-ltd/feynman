@@ -6,13 +6,13 @@ let context
 
 const actor = async (name, callbacks = {}) => {
   if (context.actors[name]) return context.actors[name]
-  const result = (context.actors[name] = Actor(
+  const newActor = (context.actors[name] = Actor(
     {},
     context.perspectives.default
   ))
   if (callbacks.hasOwnProperty('afterCreate'))
-    await callbacks.afterCreate(result)
-  return result
+    await callbacks.afterCreate(newActor)
+  return newActor
 }
 
 const perspective = (name, definition) => {

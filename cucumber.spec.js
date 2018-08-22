@@ -26,22 +26,23 @@ describe('cucumber integration', () => {
 
   it('runs an afterCreate callback when the actor is created', async () => {
     const login = sinon.spy()
-    const setupMyActor = new Promise(resolve =>
-      setTimeout(() => {
-        login()
-        resolve()
-      }, 1)
-    )
+    const setupMyActor = () =>
+      new Promise(resolve =>
+        setTimeout(() => {
+          login()
+          resolve()
+        }, 1)
+      )
     const { actor } = require('./cucumber')
     await actor('dave', { afterCreate: setupMyActor })
     sinon.assert.calledOnce(login)
   })
 
-  it('resets the state between scenarios', () => {
+  it('resets the state between scenarios', async () => {
     const { actor, reset } = require('./cucumber')
-    const dave = actor('dave')
+    const dave = await actor('dave')
     reset()
-    const anotherDave = actor('dave')
+    const anotherDave = await actor('dave')
     assert.notDeepEqual(dave, anotherDave)
   })
 
@@ -63,7 +64,7 @@ describe('cucumber integration', () => {
     })
     perspective.default('web')
     const browser = { click: sinon.spy() }
-    const dave = actor('dave').gainsAbilities({ browser })
+    const dave = (await actor('dave')).gainsAbilities({ browser })
     await dave.attemptsTo(createUser)
     sinon.assert.called(browser.click)
   })
