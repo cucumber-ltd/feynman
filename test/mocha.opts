@@ -1,2 +1,2 @@
 --recursive
-**/*.spec.js
+{,!(node_modules)/**/}*.spec.js
