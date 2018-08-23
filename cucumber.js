@@ -2,8 +2,6 @@
 
 const { Actor, Perspective } = require('./lib/feynman')
 
-let context
-
 const actor = async (name, callbacks = {}) => {
   if (context.actors[name]) return context.actors[name]
   const newActor = (context.actors[name] = Actor(
@@ -21,12 +19,14 @@ const perspective = (name, definition) => {
 }
 perspective.default = name => (context.perspectives.default = perspective(name))
 
+const context = {
+  actors: {},
+  perspectives: {},
+  defaultPerspective: Perspective('unknown default'),
+}
+
 const reset = () => {
-  context = {
-    actors: {},
-    perspectives: {},
-    defaultPerspective: Perspective('unknown'),
-  }
+  context.actors = {}
 }
 
 reset()
