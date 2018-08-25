@@ -1,0 +1,14 @@
+{
+  "name": "a-cucumber-suite",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "cucumber-js"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "cucumber": "^4.2.1"
+  }
+}
