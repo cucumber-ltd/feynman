@@ -47,7 +47,7 @@ describe('cucumber integration', () => {
   })
 
   it('creates and stores perspectives by name', () => {
-    const createUser = Task()
+    const createUser = Task('create user')
     const { perspective } = require('./cucumber')
     const onePerspecrtive = perspective('web', handle => {
       handle(createUser, () => ({ browser }) => browser.click())
