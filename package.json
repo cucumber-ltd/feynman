@@ -23,6 +23,8 @@
     "sinon": "^6.1.4"
   },
   "prettier": {
-    "semi": false
+    "semi": false,
+    "trailingComma": "es5",
+    "singleQuote": true
   }
 }
