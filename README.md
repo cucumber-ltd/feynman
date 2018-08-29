@@ -37,25 +37,25 @@ So where do these *abilities* come from? They come from the *Actor*.
 
 ## Actors perform actions using their abilities
 
-At its most basic, you give an `Actor` some `abilities` and then tell them to perform some `Actions`:
+Once you've defined your actions, you can ask an actor to attempt them:
 
 ```javascript
 const { Actor } = require('feynman')
-const browser = require('create_browser')()
+const { Follow, Click, FillIn } = require('./actions')
+const browser = require('./create_browser')()
 
 const abilities = { browser }
-const Visit = {
-  login: ({ browser }) => browser.get("https://localhost:5000/login")
-}
-
 const actor = Actor(abilities)
 actor.attemptsTo(
-  Visit.login
+  Follow.link("log in"),
+  FillIn.fieldLabelled("email").with("matt@example.com"),
+  FillIn.fieldLabelled("password").with("password"),
+  Click.on("Log in")
 )
 ```
 
 The whole set of abilities (in this case, just the `browser`) is passed to each action when it's attempted. The action
-can just pick out the abilities it needs to do its work.
+can just destructure the abilities it needs to do its work.
 
 There is one more ability too, which is where this pattern starts to get its power.
 
@@ -66,16 +66,18 @@ actions:
 
 ```javascript
 const LogIn = {
-  as: username => ({ actor, browser }) => {
+  as: email => ({ actor, browser }) => {
     actor.attemptsTo(
-      Visit.login, 
-      FillIn.label('username').with(username)
+      Follow.link("log in"),
+      FillIn.fieldLabelled("email").with(email),
+      FillIn.fieldLabelled("password").with("password"),
+      Click.on("Log in")
     )
   }
 }
 
 const actor = Actor(abilities)
-actor.attemptsTo(LogIn.as("matt"))
+actor.attemptsTo(LogIn.as("matt@example.com"))
 ```
 
 This allows you to build up higher-level behaviours out of granular actions.
