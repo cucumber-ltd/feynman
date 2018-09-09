@@ -2,15 +2,17 @@
 
 A library for helping you organise your JavaScript test automation code, inspired by the [screenplay pattern][screenplay].
 
-What's unique about feynman is that you can define multiple *perspectives* that allow you to run the same tasks against your
-application in different ways. More on that later.
+What's lovely about screenplay, as opposed to other patterns for organising automation code like [page objects][page objects], is that you're building abstractions around behaviour, rather than solution implementation. We think you're going to like it.
 
-I'm going to assume you know little or nothing about the screenplay pattern and explain
-this from the ground up.
+Copared to other screenplay implementations we've seen, what's unique about Feynman is that you can define multiple *perspectives* that allow you to run the same tasks against your application in different ways.
+
+More on that later.
+
+We're going to assume you know little or nothing about the screenplay pattern and explain this from the ground up.
 
 The first concept to grasp is an `Action`.
 
-## Actions use abilities do stuff to your app
+## Actions do stuff to your app
 
 An action is a function that takes a set of named arguments, known as *abilities*, and uses them to do stuff to your app.
 
@@ -199,3 +201,4 @@ Then('Joe should have no bookings', async () => {
 - do we say checks or asserts
 
 [screenplay]: https://ideas.riverglide.com/page-objects-refactored-12ec3541990
+[page objects]: https://martinfowler.com/bliki/PageObject.html
