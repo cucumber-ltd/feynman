@@ -1,6 +1,6 @@
 {
   "name": "feynman",
-  "version": "0.0.19",
+  "version": "0.0.20",
   "description": "A screenplay pattern library for javascript",
   "main": "lib/feynman.js",
   "scripts": {
