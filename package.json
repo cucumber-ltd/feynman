@@ -5,6 +5,7 @@
   "main": "lib/feynman.js",
   "scripts": {
     "test": "mocha",
+    "hack": "mocha -w --grep '@wip'",
     "release": "npm version patch && npm publish && git push --tags && git push"
   },
   "author": "",
