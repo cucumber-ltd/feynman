@@ -1,0 +1,16 @@
+#!/usr/bin/env sh
+firstLine=$(head -n1 $1)
+
+if [ -z "$firstLine"  ] ;then
+  mobbers="$(dirname $0)/../.mobbers"
+  
+  exec < /dev/tty
+  cat .mobbers | sed 's/^Co-authored-by: //g' | awk '{printf("%d: %s\n", NR, $0)}'
+  read -p "Select co-authors (enter to continue): " selected
+  coauthorLines=$(echo $selected | tr -Cs "[:digit:]" " " | sed -Ee 's/([0-9]+)/\1p;/g')
+  exec <&-
+  
+  coauthorLines=$(sed -n "$coauthorLines" < .mobbers)
+  tag=$(git show --oneline | head -n 1 | cut -d " " -f 2)
+  echo "${tag} Your title here\n\n$coauthorLines$(cat "$1")" > "$1"
+fi
