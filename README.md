@@ -4,7 +4,7 @@ A library for helping you organise your JavaScript test automation code, inspire
 
 What's lovely about screenplay, as opposed to other patterns for organising automation code like [page objects][page objects], is that you're building abstractions around _behaviour_, rather than solution implementation. We think you're going to like it.
 
-Copared to other screenplay implementations we've seen, what's unique about Feynman is that you can define multiple *perspectives* that allow you to run the same tasks against your application in different ways.
+Compared to other screenplay implementations we've seen, what's unique about Feynman is that you can define multiple *perspectives* that allow you to run the same tasks against your application in different ways.
 
 More on that later.
 
